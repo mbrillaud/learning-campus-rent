@@ -3,7 +3,7 @@ const app = express();
 
 const mongoose = require('mongoose');
 
-const categoriesRoutes = require('./routes/categories');
+const categoryRoutes = require('./routes/category');
 const userRoutes = require('./routes/user');
 
 
@@ -17,7 +17,7 @@ mongoose.connect(`mongodb+srv://car_rent_admin:${dbCredentials.dbPassword}@clust
 app.use(express.json());
 
 //Routes
-app.use('/api/categories', categoriesRoutes);
+app.use('/api/category', categoryRoutes);
 app.use('/api/auth', userRoutes);
 
 module.exports = app;
