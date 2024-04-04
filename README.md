@@ -57,3 +57,10 @@ Projet d'API de location de voiture en Node pour la formation learning campus
 - Le service doit être conçu pour être testé avec Insomnia ou Postman (sans interface front-end).
 
 - Veiller à la sécurité des données utilisateurs.
+
+
+
+
+
+## Notes :
+- liens du diagramme de classes : https://drive.google.com/file/d/1RPqaFBwR6dgRnyoH1iLkOzkTCbq8nlXQ/view?usp=sharing
