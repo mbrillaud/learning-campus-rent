@@ -1,5 +1,8 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const app = express();
+
+dotenv.config({path: '../.env'});
 
 const mongoose = require('mongoose');
 
@@ -10,8 +13,7 @@ const userRoutes = require('./routes/user');
 
 
 //Db connection
-const dbCredentials = require('../dbCredentials');
-mongoose.connect(`mongodb+srv://car_rent_admin:${dbCredentials.dbPassword}@cluster0.pkvplib.mongodb.net/`)
+mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PWD}@cluster0.pkvplib.mongodb.net/`)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch((error) => console.log('Connexion à MongoDB échouée : ', error));
 
