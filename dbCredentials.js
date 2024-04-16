@@ -1,1 +1,0 @@
-exports.dbPassword = 'MPX7TtpqaFg4YxY1';
