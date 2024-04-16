@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const Users = require('../models/Users');
+const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            const user = new Users({
+            const user = new User({
                 email: req.body.email,
                 password: hash
             });
@@ -18,7 +18,7 @@ exports.signup = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    Users.findOne({email: req.body.email})
+    User.findOne({email: req.body.email})
         .then(user => {
             const loginErrorMessage = 'Wrong email or password';
             if(user === null) {
