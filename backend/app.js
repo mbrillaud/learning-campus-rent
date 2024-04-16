@@ -1,16 +1,40 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const app = express();
+
+const port = process.env.PORT || '3000';
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      version: '1.0.0',
+      title: 'Car Rent',
+      description: 'Car Rent documentaiton',
+      contact: {
+        name: 'MBrillaud'
+      },
+      servers: [`http://localhost:${port}`]
+    },
+    schemes: ['http', 'https']
+  },
+  apis: ["./routes/*.js"]
+}
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 dotenv.config({path: '../.env'});
 
 const mongoose = require('mongoose');
 
-const categoryRoutes = require('./routes/category');
-const productRoutes = require('./routes/product');
-const commentRoutes = require('./routes/comment');
-const userRoutes = require('./routes/user');
+const categoriesRoutes = require('./routes/categories');
+const productsRoutes = require('./routes/products');
+const commentsRoutes = require('./routes/comments');
+const usersRoutes = require('./routes/users');
 
 
 //Db connection
@@ -24,9 +48,9 @@ app.use(express.json());
 app.use(cors());
 
 //Routes
-app.use('/api/category', categoryRoutes);
-app.use('/api/product', productRoutes);
-app.use('/api/comment', commentRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/categories', categoriesRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/comments', commentsRoutes);
+app.use('/api/auth', usersRoutes);
 
 module.exports = app;
