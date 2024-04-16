@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const app = express();
 
 dotenv.config({path: '../.env'});
@@ -19,6 +20,8 @@ mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PWD}@clu
 
 //Allow app to read body request
 app.use(express.json());
+
+app.use(cors());
 
 //Routes
 app.use('/api/category', categoryRoutes);
