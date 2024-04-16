@@ -19,10 +19,23 @@ const swaggerOptions = {
       },
       servers: [`http://localhost:${port}`]
     },
-    schemes: ['http', 'https']
+    schemes: ['http', 'https'],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [{
+      bearerAuth: []
+    }]
   },
   apis: ["./routes/*.js"]
-}
+};
+
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
