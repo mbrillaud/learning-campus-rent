@@ -2,10 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const swaggerJSDoc = require('swagger-jsdoc');
+const helpers = require('./helpers');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 
-const port = process.env.PORT || '3000';
+const port = helpers.normalizePort(process.env.PORT || '3000');
 
 const swaggerOptions = {
   swaggerDefinition: {
