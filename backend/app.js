@@ -13,7 +13,7 @@ const swaggerOptions = {
     info: {
       version: '1.0.0',
       title: 'Car Rent',
-      description: 'Car Rent documentaiton',
+      description: 'Learning Campus Car Rent API documentation',
       contact: {
         name: 'MBrillaud'
       },
