@@ -2,12 +2,21 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const swaggerJSDoc = require('swagger-jsdoc');
+const mongoose = require('mongoose');
 const helpers = require('./helpers');
 const swaggerUi = require('swagger-ui-express');
+const categoriesRoutes = require('./routes/categories');
+const productsRoutes = require('./routes/products');
+const commentsRoutes = require('./routes/comments');
+const usersRoutes = require('./routes/users');
+const ordersRoutes = require('./routes/orders');
+
 const app = express();
+
 
 const port = helpers.normalizePort(process.env.PORT || '3000');
 
+//Swagger
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -41,15 +50,8 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+//Dotenv
 dotenv.config({path: '../.env'});
-
-const mongoose = require('mongoose');
-
-const categoriesRoutes = require('./routes/categories');
-const productsRoutes = require('./routes/products');
-const commentsRoutes = require('./routes/comments');
-const usersRoutes = require('./routes/users');
-const ordersRoutes = require('./routes/orders');
 
 
 //Db connection
