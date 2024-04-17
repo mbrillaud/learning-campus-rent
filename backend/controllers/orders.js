@@ -103,10 +103,25 @@ exports.getOrderByUserId = (req, res, next) => {
  * @param {Function} next - Callback de prochaine étape.
  */
 exports.updateOrder = (req, res, next) => {
-    Order.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Order updated' }))
-        .catch(error => res.status(400).json({ error }));
+    const userId = req.auth.userId;
+
+    Order.findById(req.params.id)
+        .then(order => {
+            if (!order) {
+                return res.status(404).json({ message: 'Order not found' });
+            }
+
+            if (order.orderOwnerId.toString() !== userId) {
+                return res.status(403).json({ message: 'Unauthorized' });
+            }
+
+            Order.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+                .then(() => res.status(200).json({ message: 'Order updated' }))
+                .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
 };
+
 
 /**
  * Supprime une commande.
@@ -115,7 +130,24 @@ exports.updateOrder = (req, res, next) => {
  * @param {Function} next - Callback de prochaine étape.
  */
 exports.deleteOrder = (req, res, next) => {
-    Order.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Order deleted' }))
-        .catch(error => res.status(404).json({ error }));
+    const orderId = req.params.id;
+    const userId = req.auth.userId;
+
+    Order.findById(orderId)
+        .then(order => {
+            if (!order) {
+                return res.status(404).json({ error: 'Order not found' });
+            }
+
+            if (order.orderOwnerId.toString() !== userId) {
+                return res.status(403).json({ error: 'Unauthorized' });
+            }
+
+            // Si les IDs correspondent, supprimer la commande
+            order.deleteOne()
+                .then(() => res.status(200).json({ message: 'Order deleted' }))
+                .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
+        })
+        .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
 };
+
