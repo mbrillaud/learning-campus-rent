@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -7,8 +11,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.0",
     "mongoose-unique-validator": "^5.0.0",
-    "nodemon": "^3.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
