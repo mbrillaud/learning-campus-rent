@@ -10,9 +10,11 @@ const helpers = require('../helpers');
 exports.addComment = (req, res, next) => {
     delete req.body._id;
     const userId = helpers.getUserIdWithToken(req.headers.authorization);
+
     if (userId) {
         req.body.posterId = userId;
     }
+
     const comment = new Comment({
         ...req.body
     });
@@ -41,9 +43,26 @@ exports.getCommentsByProductId = (req, res, next) => {
  * @param {Function} next - Le middleware suivant.
  */
 exports.deleteComment = (req, res, next) => {
-    Comment.deleteOne({_id: req.params.id})
-        .then(() => res.status(200).json({message: 'Comment deleted'}))
-        .catch(error => res.status(404).json({error}));
+    const commentId = req.params.id;
+    const userId = req.auth.userId;
+    const isAdmin = req.auth.userStatus;
+
+    Comment.findById(commentId)
+        .then(comment => {
+
+            if (!comment) {
+                return res.status(404).json({ error: 'Comment not found' });
+            }
+
+            if (comment.posterId.toString() !== userId && !isAdmin) {
+                return res.status(403).json({ error: 'Unauthorized' });
+            }
+
+            comment.deleteOne()
+                .then(() => res.status(200).json({ message: 'Comment deleted' }))
+                .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
+        })
+        .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
 };
 
 /**
@@ -53,7 +72,24 @@ exports.deleteComment = (req, res, next) => {
  * @param {Function} next - Le middleware suivant.
  */
 exports.updateComment = (req, res, next) => {
-    Comment.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
-        .then(() => res.status(200).json({message: 'Comment updated'}))
-        .catch(error => res.status(400).json({error}));
+    const commentId = req.params.id;
+    const userId = req.auth.userId;
+    const isAdmin = req.auth.userStatus;
+
+    Comment.findById(commentId)
+        .then(comment => {
+
+            if (!comment) {
+                return res.status(404).json({ error: 'Comment not found' });
+            }
+
+            if (comment.posterId.toString() !== userId && !isAdmin) {
+                return res.status(403).json({ error: 'Unauthorized' });
+            }
+
+            Comment.updateOne({_id: commentId}, {...req.body, _id: commentId})
+                .then(() => res.status(200).json({message: 'Comment updated'}))
+                .catch(error => res.status(400).json({error}));
+        })
+        .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
 };
