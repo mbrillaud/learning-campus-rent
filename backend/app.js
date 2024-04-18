@@ -51,7 +51,7 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //Dotenv
-dotenv.config({path: '../.env'});
+dotenv.config({path: '.env'});
 
 
 //Db connection
