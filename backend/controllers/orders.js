@@ -104,6 +104,7 @@ exports.getOrderByUserId = (req, res, next) => {
  */
 exports.updateOrder = (req, res, next) => {
     const userId = req.auth.userId;
+    const isAdmin = req.auth.userStatus;
 
     Order.findById(req.params.id)
         .then(order => {
@@ -111,7 +112,7 @@ exports.updateOrder = (req, res, next) => {
                 return res.status(404).json({ message: 'Order not found' });
             }
 
-            if (order.orderOwnerId.toString() !== userId) {
+            if (order.orderOwnerId.toString() !== userId && !isAdmin) {
                 return res.status(403).json({ message: 'Unauthorized' });
             }
 
@@ -132,6 +133,7 @@ exports.updateOrder = (req, res, next) => {
 exports.deleteOrder = (req, res, next) => {
     const orderId = req.params.id;
     const userId = req.auth.userId;
+    const isAdmin = req.auth.userStatus;
 
     Order.findById(orderId)
         .then(order => {
@@ -139,11 +141,10 @@ exports.deleteOrder = (req, res, next) => {
                 return res.status(404).json({ error: 'Order not found' });
             }
 
-            if (order.orderOwnerId.toString() !== userId) {
+            if (order.orderOwnerId.toString() !== userId && !isAdmin) {
                 return res.status(403).json({ error: 'Unauthorized' });
             }
 
-            // Si les IDs correspondent, supprimer la commande
             order.deleteOne()
                 .then(() => res.status(200).json({ message: 'Order deleted' }))
                 .catch(error => res.status(500).json({ error: 'Internal Server Error' }));
