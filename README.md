@@ -103,16 +103,6 @@ Projet d'API de location de voiture en Node pour la formation learning campus
 - Veiller à la sécurité des données utilisateurs.
 
   
-  
-  
-  
-  
-
-## Notes :
-
-- liens du diagramme de classes : https://drive.google.com/file/d/1RPqaFBwR6dgRnyoH1iLkOzkTCbq8nlXQ/view?usp=sharing
-
-  
 
 ## Installation :
 
@@ -130,3 +120,9 @@ DB_PWD="mdp_de_la_bdd"
 
 TOKEN_KEY="cle_pour_les_jwt"
 ````
+
+## Notes :
+
+- Lien du diagramme de classes : https://drive.google.com/file/d/1RPqaFBwR6dgRnyoH1iLkOzkTCbq8nlXQ/view?usp=sharing
+
+- Pour créer un administrateur, attribuer {status: 1} à l'utilisateur en base
