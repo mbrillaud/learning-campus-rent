@@ -44,7 +44,10 @@ exports.login = (req, res, next) => {
                             res.status(401).json({message: loginErrorMessage});
                         } else {
                             const token = jwt.sign(
-                                {userId: user._id},
+                                {
+                                    userId: user._id,
+                                    userStatus: user.status
+                                },
                                 process.env.TOKEN_KEY,
                                 {expiresIn: '24h'}
                             );
