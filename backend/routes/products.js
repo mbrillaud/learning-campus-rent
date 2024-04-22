@@ -79,6 +79,28 @@ router.get('/:id', productsCtrl.getProduct);
 
 /**
  * @swagger
+ * /api/products/categories/{categoryId}:
+ *   get:
+ *     summary: Get products by category
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: categoryId
+ *         required: true
+ *         description: ID of the category to filter products
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: A list of products belonging to the specified category
+ *       '404':
+ *         description: No products found for the specified category
+ */
+
+router.get('/categories/:categoryId', productsCtrl.getProductsByCategory);
+
+/**
+ * @swagger
  * /api/products/{id}:
  *   delete:
  *     summary: Delete a product by ID

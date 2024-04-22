@@ -43,7 +43,7 @@ const swaggerOptions = {
       bearerAuth: []
     }]
   },
-  apis: ["./routes/*.js"]
+  apis: ["backend/routes/*.js"]
 };
 
 
