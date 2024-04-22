@@ -47,6 +47,30 @@ exports.getProduct = (req, res, next) => {
 };
 
 /**
+ * Récupère les produits par catégorie.
+ * @param {Object} req - La requête HTTP.
+ * @param {Object} res - La réponse HTTP.
+ * @param {Function} next - Le middleware suivant.
+ */
+exports.getProductsByCategory = (req, res, next) => {
+    const category = req.params.categoryId;
+
+    if (!category) {
+        return res.status(400).json({ error: 'Category parameter is missing' });
+    }
+
+    Product.find({ category: category })
+        .then(products => {
+            if (!products || products.length === 0) {
+                return res.status(404).json({ error: 'No products found for this category' });
+            }
+            res.status(200).json(products);
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+
+/**
  * Supprime un produit par son identifiant.
  * @param {Object} req - La requête HTTP.
  * @param {Object} res - La réponse HTTP.
