@@ -1,6 +1,5 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
-const helpers = require('../helpers');
 
 /**
  * Ajoute une nouvelle commande.
@@ -10,7 +9,7 @@ const helpers = require('../helpers');
  */
 exports.addOrder = (req, res, next) => {
     delete req.body._id;
-    const userId = helpers.getUserIdWithToken(req.headers.authorization);
+    const userId = req.auth.userId;
     if (userId) {
         req.body.orderOwnerId = userId;
     }

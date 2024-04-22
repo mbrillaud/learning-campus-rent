@@ -1,5 +1,4 @@
 const Comment = require('../models/Comment');
-const helpers = require('../helpers');
 
 /**
  * Ajoute un nouveau commentaire.
@@ -9,7 +8,7 @@ const helpers = require('../helpers');
  */
 exports.addComment = (req, res, next) => {
     delete req.body._id;
-    const userId = helpers.getUserIdWithToken(req.headers.authorization);
+    const userId = req.auth.userId;
 
     if (userId) {
         req.body.posterId = userId;
@@ -72,6 +71,7 @@ exports.deleteComment = (req, res, next) => {
  * @param {Function} next - Le middleware suivant.
  */
 exports.updateComment = (req, res, next) => {
+    console.log('req.auth : ', req.auth);
     const commentId = req.params.id;
     const userId = req.auth.userId;
     const isAdmin = req.auth.userStatus;

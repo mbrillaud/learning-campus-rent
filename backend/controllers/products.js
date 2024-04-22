@@ -9,7 +9,7 @@ const helpers = require('../helpers');
  */
 exports.addProduct = (req, res, next) => {
     delete req.body._id;
-    const userId = helpers.getUserIdWithToken(req.headers.authorization);
+    const userId = req.auth.userId;
     if (userId) {
         req.body.ownerId = userId;
     }
