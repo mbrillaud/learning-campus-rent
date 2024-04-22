@@ -90,9 +90,16 @@ exports.getOrdersByProductId = (req, res, next) => {
  * @param {Function} next - Callback de prochaine étape.
  */
 exports.getOrderByUserId = (req, res, next) => {
-    Order.find({ orderOwnerId: req.params.userId })
-        .then(orders => res.status(200).json(orders))
-        .catch(error => res.status(404).json(error));
+    const userId = req.auth.userId;
+    const isAdmin = req.auth.userStatus;
+
+    if(userId == req.params.userId || isAdmin) {
+        Order.find({ orderOwnerId: req.params.userId })
+            .then(orders => res.status(200).json(orders))
+            .catch(error => res.status(404).json(error));
+    } else {
+        res.status(403).json({ message: "Unauthorized" });
+    }
 };
 
 /**
