@@ -125,4 +125,5 @@ TOKEN_KEY="cle_pour_les_jwt"
 
 - Lien du diagramme de classes : https://drive.google.com/file/d/1RPqaFBwR6dgRnyoH1iLkOzkTCbq8nlXQ/view?usp=sharing
 - Pour créer un administrateur, attribuer {status: 1} à l'utilisateur en base
-- url prod : https://learning-campus-rent.onrender.com
+- url prod : https://learning-campus-rent.onrender.com (note : si le serveur est en idle, la première requête peut prendre jusqu'à une minute)
+- url doc swagger : https://learning-campus-rent.onrender.com/api-docs/
