@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
-const helpers = require('../helpers');
 
 module.exports = (req, res, next) => {
     try {
-        const authHeader = req.headers.authorization
+        const token = req.headers.authorization.split(' ')[1];
+        const userId = jwt.verify(token, process.env.TOKEN_KEY).userId;
+        const userStatus = jwt.verify(token, process.env.TOKEN_KEY).userStatus;
+
         req.auth = {
-            userId: helpers.getUserIdWithToken(authHeader),
-            userStatus: helpers.getUserStatusWithToken(authHeader)
+            userId: userId,
+            userStatus: userStatus
         };
         next();
     } catch(error) {
