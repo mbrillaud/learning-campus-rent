@@ -22,10 +22,10 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               label:
  *                 type: string
  *             example:
- *               name: New Category
+ *               label: New Category
  *     responses:
  *       '200':
  *         description: A successful response

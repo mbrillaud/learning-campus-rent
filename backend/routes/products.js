@@ -25,12 +25,24 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               label:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               imageUrl:
+ *                 type: string
+ *               ownerId:
  *                 type: string
  *               price:
  *                 type: number
  *             example:
- *               name: New Product
+ *               label: New Product
+ *               category: 60bf83a5e14e02002427c40d  # Exemple d'ID de catégorie
+ *               description: Description du nouveau produit
+ *               imageUrl: https://example.com/image.png
+ *               ownerId: 60bf83a5e14e02002427c40e  # Exemple d'ID de propriétaire
  *               price: 20.99
  *     responses:
  *       '200':

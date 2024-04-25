@@ -29,13 +29,35 @@ const router = express.Router();
  *         description: The order object to add
  *         required: true
  *         schema:
- *           $ref: '#/definitions/Order'
+ *           type: object
+ *           properties:
+ *             productId:
+ *               type: string
+ *               description: ID of the product associated with the order
+ *             orderOwnerId:
+ *               type: string
+ *               description: ID of the owner of the order
+ *             startingDate:
+ *               type: string
+ *               format: date-time
+ *               description: Start date of the order
+ *             endingDate:
+ *               type: string
+ *               format: date-time
+ *               description: End date of the order
+ *           required:
+ *             - productId
+ *             - orderOwnerId
+ *             - startingDate
+ *             - endingDate
  *     responses:
  *       200:
  *         description: Order saved
  *       400:
  *         description: Bad request
  */
+
+
 router.post('/', auth, ordersCtrl.addOrder);
 
 /**

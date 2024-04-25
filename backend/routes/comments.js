@@ -27,11 +27,14 @@ const router = express.Router();
  *             properties:
  *               productId:
  *                 type: string
- *               content:
+ *               posterId:
+ *                 type: string
+ *               comment:
  *                 type: string
  *             example:
  *               productId: "product_id"
- *               content: "This is a comment"
+ *               posterId: "poster_id"
+ *               comment: "This is a comment"
  *     responses:
  *       '200':
  *         description: A successful response
@@ -40,6 +43,7 @@ const router = express.Router();
  *       '400':
  *         description: Bad request
  */
+
 router.post('/', auth, commentsCtrl.addComment);
 
 /**
