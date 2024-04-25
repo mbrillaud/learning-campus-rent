@@ -23,12 +23,12 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
  *               password:
  *                 type: string
  *             example:
- *               username: john_doe
+ *               email: john_doe@example.com
  *               password: password123
  *     responses:
  *       '200':
@@ -36,6 +36,7 @@ const router = express.Router();
  *       '400':
  *         description: Bad request
  */
+
 router.post('/signup', usersCtrl.signup);
 
 /**
@@ -56,7 +57,7 @@ router.post('/signup', usersCtrl.signup);
  *               password:
  *                 type: string
  *             example:
- *               username: john_doe
+ *               email: john_doe@example.com
  *               password: password123
  *     responses:
  *       '200':
